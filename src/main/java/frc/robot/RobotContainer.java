@@ -1,18 +1,21 @@
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants;
+import frc.robot.subsystems.Midtake;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
-  public RobotContainer() {
-    configureBindings();
-  }
+  private CommandXboxController driverController = new CommandXboxController(0);
 
   private void configureBindings() {
+    Trigger driverLeftTrigger = driverController.leftTrigger();
+    Trigger driverRightTrigger = driverController.rightTrigger();
+
+    driverLeftTrigger.whileTrue(new InstantCommand(() -> Midtake.get().runMidtakeMotor()));
+    driverRightTrigger.whileTrue(new InstantCommand(() -> Midtake.get().runMidtakeMotor()));
   }
 }
