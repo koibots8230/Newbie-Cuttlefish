@@ -16,8 +16,8 @@ public class IntakePosition extends SubsystemBase {
         return intakeUpDown;
     }
 
-    private final CANSparkMax intakePositionMotor;
-    private final RelativeEncoder intakePositionEncoder;
+    public final CANSparkMax intakePositionMotor;
+    public final RelativeEncoder intakePositionEncoder;
     
     private IntakePosition() {
         intakePositionMotor = new CANSparkMax(
@@ -28,6 +28,7 @@ public class IntakePosition extends SubsystemBase {
         intakePositionMotor.setIdleMode(IdleMode.kBrake);
 
         intakePositionEncoder = intakePositionMotor.getEncoder();
+        intakePositionEncoder.setPosition(0);
     }
 
     @Override
@@ -45,6 +46,14 @@ public class IntakePosition extends SubsystemBase {
         return 
             Math.abs(number) < Constants.INTAKE_POSITION_JOYSTICK_DEADZONE 
             ? 0.0 : number;
+    }
+
+    public double getMotorCurrent() {
+        return intakePositionMotor.getOutputCurrent();
+    }
+
+    public double getEncoderPosition() {
+        return intakePositionEncoder.getPosition();
     }
     
 }
