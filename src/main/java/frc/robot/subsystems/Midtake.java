@@ -9,6 +9,7 @@ public class Midtake extends SubsystemBase {
     private static Midtake m_Midtake = new Midtake();
 
     private CANSparkMax midtakeMotor;
+
     
     private Midtake() {
         midtakeMotor = new CANSparkMax(Constants.MIDTAKE_MOTOR, MotorType.kBrushless);
@@ -16,6 +17,14 @@ public class Midtake extends SubsystemBase {
 
     public void runMidtakeMotor() {
         midtakeMotor.set(0.75);
+    }
+
+    public void stopMidtakeMotor() {
+        midtakeMotor.set(0);
+    }
+
+    public double getMidtakeMotorCurrent() {
+        return midtakeMotor.getOutputCurrent();
     }
 
     public static Midtake get() {

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.commands.MidtakeRun;
 import frc.robot.subsystems.Midtake;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,7 +16,7 @@ public class RobotContainer {
     Trigger driverLeftTrigger = driverController.leftTrigger();
     Trigger driverRightTrigger = driverController.rightTrigger();
 
-    driverLeftTrigger.whileTrue(new InstantCommand(() -> Midtake.get().runMidtakeMotor()));
-    driverRightTrigger.whileTrue(new InstantCommand(() -> Midtake.get().runMidtakeMotor()));
+    driverLeftTrigger.whileTrue(new MidtakeRun());
+    driverRightTrigger.whileTrue(new MidtakeRun());
   }
 }
