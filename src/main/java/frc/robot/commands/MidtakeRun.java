@@ -7,10 +7,10 @@ import frc.robot.subsystems.Midtake;
 
 public class MidtakeRun extends CommandBase {
     boolean end = false;
-    LinearFilter voltageFilter;
+    LinearFilter currentFilter;
 
     public MidtakeRun() {
-        voltageFilter = LinearFilter.movingAverage(5);
+        currentFilter = LinearFilter.movingAverage(5);
         addRequirements(Midtake.get());
     }
 
@@ -21,7 +21,7 @@ public class MidtakeRun extends CommandBase {
 
     @Override
     public void execute() {
-        if (voltageFilter.calculate(Math.abs(Midtake.get().getMidtakeMotorCurrent())) > Constants.MIDTAKE_CURRENT_LIMIT) {
+        if (currentFilter.calculate(Math.abs(Midtake.get().getMidtakeMotorCurrent())) > Constants.MIDTAKE_CURRENT_LIMIT) {
             end = true;
         }
     }
