@@ -16,11 +16,15 @@ public class Midtake extends SubsystemBase {
     }
 
     public void runMidtakeMotor() {
-        midtakeMotor.set(0.75);
+        midtakeMotor.set(Constants.MIDTAKE_FORWARD_SPEED);
+    }
+
+    public void runMidtakeMotorReverse() {
+        midtakeMotor.set(Constants.MIDTAKE_REVERSE_SPEED);
     }
 
     public void stopMidtakeMotor() {
-        midtakeMotor.set(0);
+        midtakeMotor.set(Constants.MOTOR_OFF);
     }
 
     public double getMidtakeMotorCurrent() {
