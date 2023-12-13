@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,6 +19,7 @@ public class IntakePosition extends SubsystemBase {
 
     public final CANSparkMax intakePositionMotor;
     public final RelativeEncoder intakePositionEncoder;
+    private LinearFilter averager;
     
     private IntakePosition() {
         intakePositionMotor = new CANSparkMax(
@@ -29,11 +31,17 @@ public class IntakePosition extends SubsystemBase {
 
         intakePositionEncoder = intakePositionMotor.getEncoder();
         intakePositionEncoder.setPosition(0);
+
+        averager = LinearFilter.movingAverage(5);
     }
+
+    private double averagedCurrent = 0;
 
     @Override
     public void periodic() {
-
+        averagedCurrent = averager.calculate(
+            intakePositionMotor.getOutputCurrent()
+        );
     }
 
     public void setIntakePositionMotor(double speed) {
@@ -45,11 +53,11 @@ public class IntakePosition extends SubsystemBase {
     public double checkDeadzone(double number) {
         return 
             Math.abs(number) < Constants.INTAKE_POSITION_JOYSTICK_DEADZONE 
-            ? 0.0 : number;
+            ? 0.0 : 0.5;
     }
 
     public double getMotorCurrent() {
-        return intakePositionMotor.getOutputCurrent();
+        return averagedCurrent;
     }
 
     public double getEncoderPosition() {

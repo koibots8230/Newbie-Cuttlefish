@@ -9,8 +9,8 @@ import frc.robot.subsystems.IntakePosition;
 
 public class RobotContainer {
 
-    private final CommandXboxController controller =
-        new CommandXboxController(0);
+    // private final CommandXboxController controller =
+    //    new CommandXboxController(0);
 
     public RobotContainer() {
         configureBindings();
@@ -21,7 +21,7 @@ public class RobotContainer {
 
         IntakePosition.get().setDefaultCommand(
             new IntakeMove(
-                controller::getLeftY
+                operatorController::getLeftY
             )
         );
     }
